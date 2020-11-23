@@ -36,10 +36,13 @@ namespace ASP_MW_Pipeline_quest231120
           
             app.UseHttpsRedirection();
             app.UseRouting();
-            app.Run(async context =>
-           {
-               await context.Response.WriteAsync("Hello World!");
-           });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapGet("/allow", async context =>
+                {
+                    await context.Response.WriteAsync("Hello World!");
+                });              
+            });
         }
     }
 }
