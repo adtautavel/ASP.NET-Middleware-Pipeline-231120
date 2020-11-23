@@ -32,12 +32,22 @@ namespace ASP_MW_Pipeline_quest231120
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
             
-            env.ApplicationName = "AllowQuestConfiguration";
+            app.Run(async context =>
+            {
+                if (context.Request.Headers.ContainsKey("allow"))
+                {
+                    await context.Response.WriteAsync("Hello World!");
+                }
+                else
+                {
+                    throw new Exception("\"allow\" parameter is missing");
+                }
+            };
           
             app.UseHttpsRedirection();
             app.UseRouting();
